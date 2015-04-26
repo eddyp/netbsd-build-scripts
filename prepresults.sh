@@ -78,15 +78,26 @@ net_interfaces=""
 EORCCONF
 unset rcconf
 
+nbnfsok=yes
+[ "$NETBSDOUT" ] && [ "$NFSROOT" ] && [ -d "$NETBSDOUT" ] && [ "$NFSROOT" != '/' ] || nbnfsok=no
+if [ "$nbnfsok" = "no" ]; then
+	echo "Either NETBSDOUT or NFSROOT were not correctly set. This is dangerous, so we're quitting to prevent data loss!"
+	exit 3
+fi
+
 # prepare copy
 cat <<EOCOPY >$NETBSDOUT/copy.sh
 #!/bin/sh
 
+#NFSSRVMNT=/mnt
+NFSSRVMNT=$MEDIAROOT
+
 HASH=\$(basename "$NETBSDOUT")
 rm -fr $NFSROOT
-cp -ar /mnt/netbsd/\${HASH} $NFSROOT
-rm -f /srv/tftp/netbsd-nfs.bin
-cp -a $NFSROOT/root/netbsd-nfs.bin /srv/tftp/netbsd-nfs.bin
+cp -ar $NFSSRVMNT/netbsd/\${HASH} $NFSROOT
+# don't copy the kernel the problem now is in userspace
+#rm -f /srv/tftp/netbsd-nfs.bin
+#cp -a $NFSROOT/root/netbsd-nfs.bin /srv/tftp/netbsd-nfs.bin
 EOCOPY
 chmod +x $NETBSDOUT/copy.sh
 
