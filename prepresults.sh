@@ -13,10 +13,9 @@ srcdir=$(pwd)
 MEDIAROOT=/media/Store
 
 # my laptop-'s wifi net IP
-DEVIP=$(/sbin/ifconfig wlan0 | grep -E -o 'inet addr:[^ ]*' | sed 's#^.*:##')
+DEVIP=$(/sbin/ifconfig eth0 | grep -E -o 'inet addr:[^ ]*' | sed 's#^.*:##')
 NFSIP=$DEVIP
 #NFSIP=192.168.77.250
-
 NFSROOT=/export/netbsd-nslu2
 
 NETBSDOUT=${MEDIAROOT}/netbsd/$(git describe --always | tr '/' '_')
@@ -48,7 +47,8 @@ mknod=$srcdir/obj/tooldir.$(uname -s)-$(uname -r)-$(uname -m)/bin/nbmknod
 cd $NETBSDOUT/root/dev && sh ./MAKEDEV -m $mknod all && cd -
 
 cat <<EOHOSTS >>${NETBSDOUT}/root/etc/hosts
-192.168.77.251  kinder
+#192.168.77.251  kinder
+192.168.0.251  kinder
 192.168.77.1    toblerone
 #192.168.77.250  ritter nfsserver
 $NFSIP  nfsserver
@@ -62,7 +62,8 @@ nfsserver:$NFSROOT/root   /     nfs   rw 0 0
 #nfsserver:$NFSROOT/home   /home nfs   rw 0 0
 EOFSTAB
 
-echo 'inet client netmask 255.255.255.0 broadcast 192.168.77.251' > ${NETBSDRFS}/etc/ifconfig.npe0
+#echo 'inet client netmask 255.255.255.0 broadcast 192.168.77.251' > ${NETBSDRFS}/etc/ifconfig.npe0
+echo 'inet client netmask 255.255.255.0 broadcast 192.168.0.251' > ${NETBSDRFS}/etc/ifconfig.npe0
 
 sed -i 's|^#telnet|telnet|' ${NETBSDRFS}/etc/inetd.conf
 
@@ -71,7 +72,8 @@ sed -i 's@rc_configured=.*@rc_configured=YES@' $rcconf
 cat <<EORCCONF >>$rcconf
 sshd=YES
 hostname="kinder"
-defaultroute="192.168.77.1"
+#defaultroute="192.168.77.1"
+defaultroute="$DEVIP"
 nfs_client=YES
 auto_ifconfig=NO
 net_interfaces=""
