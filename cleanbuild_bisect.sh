@@ -10,7 +10,7 @@ cp ../IxNpeMicrocode.dat sys/arch/arm/xscale/
 #patch -p1 < ../binutils.patch
 export NOGCCERROR=yes
 
-export ver=$(git describe --tags)
+export ver=$(git describe --tags | tr '/' '_')
 
 git diff
 
