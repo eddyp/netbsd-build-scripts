@@ -103,4 +103,4 @@ cp -ar \$NFSSRVMNT/netbsd/\${HASH} $NFSROOT
 EOCOPY
 chmod +x $NETBSDOUT/copy.sh
 
-echo "Changes done in ${NETBSDRFS}."
+echo "Changes done in ${NETBSDRFS}"
