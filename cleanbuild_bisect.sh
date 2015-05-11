@@ -36,6 +36,7 @@ mkdir obj && mv ../tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 obj/       &&
 ) 2>&1 | tee ../log-$ver.txt || true
 #) 2>&1 | tee ../log-$ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
 
-tail -n 1000 ../log-$ver.txt | grep -q 'Successful make release' && exit 1 || exit 125
+#tail -n 1000 ../log-$ver.txt | grep -q 'Successful make release' && exit 1 || exit 125
+tail -n 1000 ../log-$ver.txt | grep -q 'Built sets to /home/eddy/usr/src/netbsd/net/src/obj/releasedir/evbarm/binary/sets' && exit 1 || exit 125
 
 #ls -l obj/releasedir/evbarm/binary/sets
