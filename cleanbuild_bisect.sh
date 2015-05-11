@@ -12,6 +12,14 @@ cp ../IxNpeMicrocode.dat sys/arch/arm/xscale/
 export NOGCCERROR=yes
 
 export ver=$(git describe --tags | tr '/' '_')
+export SLOPPY_FLIST=yes
+export MKMAN=no
+export MKDOC=no
+export MKINFO=no
+export MKNLS=no
+export MKHTML=no
+export MKCATPAGES=no
+export MAKEVERBOSE=3
 
 git diff
 
