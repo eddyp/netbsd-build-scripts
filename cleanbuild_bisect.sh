@@ -9,6 +9,8 @@ cp ../NSLU2_ALL sys/arch/evbarm/conf/
 cp ../IxNpeMicrocode.dat sys/arch/arm/xscale/
 
 #patch -p1 < ../binutils.patch
+#patch -p1 < ../0001-Revert-Cleanup-arm-netbsdelf-eabi.patch
+patch -p1 < ../armbe-fix.patch
 export NOGCCERROR=yes
 
 export ver=$(git describe --tags | tr '/' '_')
