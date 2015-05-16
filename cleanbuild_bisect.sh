@@ -1,7 +1,24 @@
 #!/bin/sh
 set -e
 
-mv obj/tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 ../
+while [ $# -gt 0 ]; do
+	case $1 in
+		-t)
+			toolbuild=1;
+			shift;
+			;;
+		-k)
+			kernbuild=1;
+			shift
+			;;
+		*)
+			echo "Unknown option '$1', ignoring"
+			shift
+			;;
+	esac
+done
+
+[ "$toolbuild" ] || mv obj/tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 ../
 git clean -x -f -d
 git reset --hard HEAD
 
@@ -30,10 +47,23 @@ git diff
 #./build.sh -j 3 -u -U -m evbarm -a armeb -V NOGCCERROR=yes build           &&
 #./build.sh -j 3 -u -U -m evbarm -a armeb -V KERNEL_SETS=NSLU2_ALL release
 #) 2>&1 | tee ../log-$ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
+if [ "$kernbuild" ]; then
+	DISTR=release
+	VAR="-V KERNEL_SETS=NSLU2_ALL"
+else
+	DISTR=distribution
+fi
 (
-mkdir obj && mv ../tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 obj/       &&
+mkdir obj &&
+(
+	if [ $toolbuild ]; then
+		./build.sh -j 3 -u -U -m evbarm -a armeb tools ;
+	else
+		mv ../tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 obj/
+	fi
+) &&
 ./build.sh -j 3 -u -U -m evbarm -a armeb -V NOGCCERROR=yes build          &&
-./build.sh -j 3 -u -U -m evbarm -a armeb -V SLOPPY_FLIST=yes distribution &&
+./build.sh -j 3 -u -U -m evbarm -a armeb -V SLOPPY_FLIST=yes $VAR $DISTR &&
 ./build.sh -j 3 -u -U -m evbarm -a armeb sets
 ) 2>&1 | tee ../log-$ver.txt || true
 #) 2>&1 | tee ../log-$ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
