@@ -11,6 +11,15 @@ while [ $# -gt 0 ]; do
 			kernbuild=1;
 			shift
 			;;
+		-l)
+			shift
+			if [ "$1" ]; then
+				logsuf="-$1"
+				shift
+			else
+				logsuf=-bisect
+			fi
+			;;
 		*)
 			echo "Unknown option '$1', ignoring"
 			shift
@@ -66,10 +75,10 @@ mkdir obj &&
 ./build.sh -j 3 -u -U -m evbarm -a armeb -V NOGCCERROR=yes build          &&
 ./build.sh -j 3 -u -U -m evbarm -a armeb -V SLOPPY_FLIST=yes $VAR $DISTR &&
 ./build.sh -j 3 -u -U -m evbarm -a armeb sets
-) 2>&1 | tee ../log-$ver.txt || true
+) 2>&1 | tee ../log$logsuf-$ver.txt || true
 #) 2>&1 | tee ../log-$ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
 
 #tail -n 1000 ../log-$ver.txt | grep -q 'Successful make release' && exit 1 || exit 125
-tail -n 1000 ../log-$ver.txt | grep -q 'Built sets to /home/eddy/usr/src/netbsd/net/src/obj/releasedir/evbarm/binary/sets' && exit 1 || exit 125
+tail -n 1000 ../log$logsuf-$ver.txt | grep -q 'Built sets to /home/eddy/usr/src/netbsd/net/src/obj/releasedir/evbarm/binary/sets' && exit 1 || exit 125
 
 #ls -l obj/releasedir/evbarm/binary/sets
