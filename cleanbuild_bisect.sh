@@ -32,14 +32,14 @@ patch -p0 < ../netbsd-elf.diff
 export NOGCCERROR=yes
 
 export ver=$(git describe --tags | tr '/' '_')
-export SLOPPY_FLIST=yes
-export MKMAN=no
-export MKDOC=no
-export MKINFO=no
-export MKNLS=no
-export MKHTML=no
-export MKCATPAGES=no
-export MAKEVERBOSE=3
+export SLOPPY_FLIST=${SLOPPY_FLIST-yes}
+export MKMAN=${MKMAN-no}
+export MKDOC=${MKDOC-no}
+export MKINFO=${MKDOC-no}
+export MKNLS=${MKNLS-no}
+export MKHTML=${MKHTML-no}
+export MKCATPAGES=${MKCATPAGES-no}
+export MAKEVERBOSE=${MAKEVERBOSE-3}
 
 git diff
 
