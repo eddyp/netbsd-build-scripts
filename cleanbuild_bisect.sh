@@ -69,9 +69,11 @@ git diff
 #) 2>&1 | tee ../log-$ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
 if [ "$kernbuild" ]; then
 	DISTR=release
-	VAR="-V KERNEL_SETS=NSLU2_ALL"
+	VAR="-V KERNEL_SETS=NSLU2_ALL -V BUILD_KERNELS=NSLU2_ALL"
+	logsuf="-kern$logsuf"
 else
 	DISTR=distribution
+	logsuf="-nokern$logsuf"
 fi
 (
 mkdir obj &&

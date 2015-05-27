@@ -98,8 +98,11 @@ HASH=\$(basename "$NETBSDOUT")
 rm -fr $NFSROOT
 cp -ar \$NFSSRVMNT/netbsd/\${HASH} $NFSROOT
 # don't copy the kernel the problem now is in userspace
-#rm -f /srv/tftp/netbsd-nfs.bin
-#cp -a $NFSROOT/root/netbsd-nfs.bin /srv/tftp/netbsd-nfs.bin
+KERN=$NFSROOT/root/netbsd-nfs.bin
+if [ -f "$KERN" ]; then
+	rm -f /srv/tftp/netbsd-nfs.bin
+	cp -a $NFSROOT/root/netbsd-nfs.bin /srv/tftp/netbsd-nfs.bin
+fi
 EOCOPY
 chmod +x $NETBSDOUT/copy.sh
 
