@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 
+par=3
 while [ $# -gt 0 ]; do
 	case $1 in
 		-t)
@@ -10,6 +11,15 @@ while [ $# -gt 0 ]; do
 		-k)
 			kernbuild=1;
 			shift
+			;;
+		-j)
+			shift
+			if [ "$1" ]; then
+				par=$1
+				shift
+			else
+				par=1
+			fi
 			;;
 		-l)
 			shift
@@ -72,9 +82,9 @@ mkdir obj &&
 		mv ../tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 obj/
 	fi
 ) &&
-./build.sh -j 3 -u -U -m evbarm -a armeb -V NOGCCERROR=yes build          &&
-./build.sh -j 3 -u -U -m evbarm -a armeb -V SLOPPY_FLIST=yes $VAR $DISTR &&
-./build.sh -j 3 -u -U -m evbarm -a armeb sets
+./build.sh -j $par -u -U -m evbarm -a armeb -V NOGCCERROR=yes build          &&
+./build.sh -j $par -u -U -m evbarm -a armeb -V SLOPPY_FLIST=yes $VAR $DISTR &&
+./build.sh -j $par -u -U -m evbarm -a armeb sets
 ) 2>&1 | tee ../log$logsuf-$ver.txt || true
 #) 2>&1 | tee ../log-$ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
 
