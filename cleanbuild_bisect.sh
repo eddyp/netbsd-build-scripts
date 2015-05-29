@@ -48,6 +48,7 @@ cp ../IxNpeMicrocode.dat sys/arch/arm/xscale/
 #patch -p1 < ../0001-Revert-Cleanup-arm-netbsdelf-eabi.patch
 #patch -p1 < ../armbe-fix.patch
 patch -p0 < ../netbsd-elf.diff || true
+patch -p1 < ../crypto.inc.diff || true
 export NOGCCERROR=yes
 
 export ver=$(git describe --tags | tr '/' '_')
