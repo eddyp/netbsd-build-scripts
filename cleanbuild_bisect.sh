@@ -60,6 +60,10 @@ export MKNLS=${MKNLS-no}
 export MKHTML=${MKHTML-no}
 export MKCATPAGES=${MKCATPAGES-no}
 export MAKEVERBOSE=${MAKEVERBOSE-3}
+export MKKDEBUG=${MKKDEBUG-yes}
+export MKDEBUG=${MKDEBUG-yes}
+export MKLINT=${MKLINT-no}
+export MKPROFILE=${MKPROFILE-no}
 
 git diff
 
