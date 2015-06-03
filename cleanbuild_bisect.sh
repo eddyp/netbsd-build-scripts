@@ -49,7 +49,7 @@ cp ../IxNpeMicrocode.dat sys/arch/arm/xscale/
 #patch -p1 < ../armbe-fix.patch
 patch -p0 < ../netbsd-elf.diff || true
 patch -p1 < ../crypto.inc.diff || true
-export NOGCCERROR=yes
+#export NOGCCERROR=yes
 
 export ver=$(git describe --tags | tr '/' '_')
 #export SLOPPY_FLIST=${SLOPPY_FLIST-yes}
@@ -62,8 +62,8 @@ export ver=$(git describe --tags | tr '/' '_')
 export MAKEVERBOSE=${MAKEVERBOSE-4}
 export MKKDEBUG=${MKKDEBUG-yes}
 export MKDEBUG=${MKDEBUG-yes}
-export MKLINT=${MKLINT-no}
-export MKPROFILE=${MKPROFILE-no}
+#export MKLINT=${MKLINT-no}
+#export MKPROFILE=${MKPROFILE-no}
 
 git diff
 
@@ -73,10 +73,12 @@ git diff
 #./build.sh -j 3 -u -U -m evbarm -a armeb -V KERNEL_SETS=NSLU2_ALL release
 #) 2>&1 | tee ../log-$ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
 if [ "$kernbuild" ]; then
-	DISTR=release
+	#DISTR=release
+	DISTR=distribution
 	#VAR="-V KERNEL_SETS=NSLU2_ALL -V BUILD_KERNELS=NSLU2_ALL"
 	#VAR="-V KERNEL_SETS=NSLU2_ALL -V ALL_KERNELS=NSLU2_ALL"
-	VAR="-V ALL_KERNELS=NSLU2_ALL"
+	#VAR="-V ALL_KERNELS=NSLU2_ALL"
+	VAR="-V ALL_KERNELS=NSLU2_ALL kernel=NSLU2_ALL"
 	logsuf="-kern$logsuf"
 else
 	DISTR=distribution
