@@ -60,8 +60,8 @@ export ver=$(git describe --tags | tr '/' '_')
 #export MKHTML=${MKHTML-no}
 #export MKCATPAGES=${MKCATPAGES-no}
 export MAKEVERBOSE=${MAKEVERBOSE-4}
-export MKKDEBUG=${MKKDEBUG-yes}
-export MKDEBUG=${MKDEBUG-yes}
+#export MKKDEBUG=${MKKDEBUG-yes}
+#export MKDEBUG=${MKDEBUG-yes}
 #export MKLINT=${MKLINT-no}
 #export MKPROFILE=${MKPROFILE-no}
 
@@ -78,7 +78,8 @@ if [ "$kernbuild" ]; then
 	#VAR="-V KERNEL_SETS=NSLU2_ALL -V BUILD_KERNELS=NSLU2_ALL"
 	#VAR="-V KERNEL_SETS=NSLU2_ALL -V ALL_KERNELS=NSLU2_ALL"
 	#VAR="-V ALL_KERNELS=NSLU2_ALL"
-	VAR="-V ALL_KERNELS=NSLU2_ALL kernel=NSLU2_ALL"
+	#VAR="-V ALL_KERNELS=NSLU2_ALL kernel=NSLU2_ALL"
+	VAR="kernel=NSLU2_ALL"
 	logsuf="-kern$logsuf"
 else
 	DISTR=distribution
