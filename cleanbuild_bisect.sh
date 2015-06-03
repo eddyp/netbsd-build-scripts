@@ -52,14 +52,14 @@ patch -p1 < ../crypto.inc.diff || true
 export NOGCCERROR=yes
 
 export ver=$(git describe --tags | tr '/' '_')
-export SLOPPY_FLIST=${SLOPPY_FLIST-yes}
-export MKMAN=${MKMAN-no}
-export MKDOC=${MKDOC-no}
-export MKINFO=${MKDOC-no}
-export MKNLS=${MKNLS-no}
-export MKHTML=${MKHTML-no}
-export MKCATPAGES=${MKCATPAGES-no}
-export MAKEVERBOSE=${MAKEVERBOSE-3}
+#export SLOPPY_FLIST=${SLOPPY_FLIST-yes}
+#export MKMAN=${MKMAN-no}
+#export MKDOC=${MKDOC-no}
+#export MKINFO=${MKDOC-no}
+#export MKNLS=${MKNLS-no}
+#export MKHTML=${MKHTML-no}
+#export MKCATPAGES=${MKCATPAGES-no}
+export MAKEVERBOSE=${MAKEVERBOSE-4}
 export MKKDEBUG=${MKKDEBUG-yes}
 export MKDEBUG=${MKDEBUG-yes}
 export MKLINT=${MKLINT-no}
@@ -92,7 +92,7 @@ mkdir obj &&
 	fi
 ) &&
 ./build.sh -j $par -u -U -m evbarm -a armeb -V NOGCCERROR=yes build          &&
-./build.sh -j $par -u -U -m evbarm -a armeb -V SLOPPY_FLIST=yes $VAR $DISTR &&
+./build.sh -j $par -u -U -m evbarm -a armeb $VAR $DISTR &&
 ./build.sh -j $par -u -U -m evbarm -a armeb sets
 ) 2>&1 | tee ../log$logsuf-$ver.txt || true
 #) 2>&1 | tee ../log-$ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
