@@ -39,8 +39,9 @@ unset swapf
 
 #cp obj/releasedir/evbarm/binary/sets/* $NETBSDOUT/
 
+kerndir=${srcdir}/sys/arch/evbarm/compile/obj/NSLU2_ALL
 for bsdset in base etc misc modules text kern-NSLU2_ALL ; do
-	tar --numeric-owner -xvpzf $SETSDIR/$bsdset.tgz -C $NETBSDOUT/root/ || [ $bsdset = "kern-NSLU2_ALL" ]
+	tar --numeric-owner -xvpzf $SETSDIR/$bsdset.tgz -C $NETBSDOUT/root/ || cp ${kerndir}/netbsd-nfs* $NETBSDOUT/root/ || [ $bsdset = "kern-NSLU2_ALL" ]
 done
 
 mknod=$srcdir/obj/tooldir.$(uname -s)-$(uname -r)-$(uname -m)/bin/nbmknod
