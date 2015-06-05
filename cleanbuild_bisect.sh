@@ -38,7 +38,7 @@ while [ $# -gt 0 ]; do
 done
 
 [ "$toolbuild" ] || mv obj/tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 ../
-git clean -x -f -d
+git clean -x -f -d || [ "$(git status -u -s | wc -l)" -eq 0 ]
 git reset --hard HEAD
 
 cp ../NSLU2_ALL sys/arch/evbarm/conf/
@@ -86,7 +86,7 @@ else
 	logsuf="-nokern$logsuf"
 fi
 (
-mkdir obj &&
+mkdir -p obj &&
 (
 	if [ $toolbuild ]; then
 		./build.sh -j 3 -u -U -m evbarm -a armeb tools ;
