@@ -95,9 +95,9 @@ mkdir -p obj &&
 		mv ../tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 obj/
 	fi
 ) &&
-./build.sh -j $par -u -U -m evbarm -a armeb build             &&
-./build.sh -j $par -u -U -m evbarm -a armeb $cb_var $cb_distr &&
-./build.sh -j $par -u -U -m evbarm -a armeb sets
+./build.sh -j $par -u -U -m evbarm -a armeb -V HOST_SH=/bin/bash build             &&
+./build.sh -j $par -u -U -m evbarm -a armeb -V HOST_SH=/bin/bash $cb_var $cb_distr &&
+./build.sh -j $par -u -U -m evbarm -a armeb -V HOST_SH=/bin/bash sets
 ) 2>&1 | tee $cb_log || true
 #) 2>&1 | tee $cb_log | grep -q 'extra files in DESTDIR' && exit 0 || true
 
