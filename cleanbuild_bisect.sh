@@ -85,6 +85,7 @@ else
 	cb_distr=distribution
 	cb_logsuf="-nokern$cb_logsuf"
 fi
+cb_log=obj/log$cb_logsuf-$cb_ver.txt
 (
 mkdir -p obj &&
 (
@@ -97,10 +98,12 @@ mkdir -p obj &&
 ./build.sh -j $par -u -U -m evbarm -a armeb -V NOGCCERROR=yes build          &&
 ./build.sh -j $par -u -U -m evbarm -a armeb $cb_var $cb_distr &&
 ./build.sh -j $par -u -U -m evbarm -a armeb sets
-) 2>&1 | tee ../log$cb_logsuf-$cb_ver.txt || true
-#) 2>&1 | tee ../log-$cb_ver.txt | grep -q 'extra files in DESTDIR' && exit 0 || true
+) 2>&1 | tee $cb_log || true
+#) 2>&1 | tee $cb_log | grep -q 'extra files in DESTDIR' && exit 0 || true
 
-#tail -n 1000 ../log-$cb_ver.txt | grep -q 'Successful make release' && exit 1 || exit 125
-tail -n 500 ../log$cb_logsuf-$cb_ver.txt | grep -q 'Built sets to /home/eddy/usr/src/netbsd/net/src/obj/releasedir/evbarm/binary/sets' && exit 1 || exit 125
+#tail -n 1000 $cb_log | grep -q 'Successful make release' && exit 1 || exit 125
+#tail -n 500 $cb_log | grep -q 'Built sets to /home/eddy/usr/src/netbsd/net/src/obj/releasedir/evbarm/binary/sets' && exit 1 || exit 125
+tail -n 500 $cb_log
 
+mv $cb_log ..
 #ls -l obj/releasedir/evbarm/binary/sets
