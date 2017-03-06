@@ -37,7 +37,11 @@ while [ $# -gt 0 ]; do
 	esac
 done
 
-[ "$cb_toolbuild" ] || mv obj/tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 ../
+HKN=$(uname -s)
+HM=$(uname -m)
+HKR=$(uname -r)
+HTD=tooldir.${HKN}-${HKR}-${HM}
+[ "$cb_toolbuild" ] || mv obj/${HTD} ../
 git clean -x -f -d || [ "$(git status -u -s | wc -l)" -eq 0 ]
 git reset --hard HEAD
 
@@ -92,7 +96,7 @@ mkdir -p obj &&
 	if [ $cb_toolbuild ]; then
 		./build.sh -j 3 -u -U -m evbarm -a armeb tools ;
 	else
-		mv ../tooldir.Linux-3.18.9-gd1034e83-heidi-x86_64 obj/
+		mv ../${HTD} obj/
 	fi
 ) &&
 ./build.sh -j $par -u -U -m evbarm -a armeb -V HOST_SH=/bin/bash $cb_var $cb_distr &&
